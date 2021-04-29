@@ -31,15 +31,16 @@ db.authenticate().then(() => {
   console.log("connected to the database");
 });
 
-app.use("/wiki", wiki);
+
+app.get("/", (req, res) => {
+  res.send(layout(`<p>Hello</p>`));
+});
 
 app.get("/", (req, res) => {
   res.redirect("/wiki");
 });
 
-app.get("/", (req, res) => {
-  res.send(layout(`<p>Hello</p>`));
-});
+app.use("/wiki", wiki);
 
 const PORT = 3000;
 

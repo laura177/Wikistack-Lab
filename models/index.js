@@ -22,6 +22,10 @@ const Page = db.define("page", {
   },
 });
 
+Page.beforeValidate(page => {
+  page.slug = page.title.replace(/\s/, '_').replace(/\W/, '');
+})
+
 const User = db.define("user", {
   name: {
     type: Sequelize.STRING,
