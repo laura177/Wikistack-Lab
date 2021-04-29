@@ -2,11 +2,10 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const app = express();
-const layout = require("./layout");
+const layout = require("./views/layout");
 const { db, Page, User } = require("./models");
 const wiki = require("./routes/wiki");
 const users = require("./routes/users");
-
 
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -32,7 +31,11 @@ db.authenticate().then(() => {
   console.log("connected to the database");
 });
 
-app.use('/wiki', wiki);
+app.use("/wiki", wiki);
+
+app.get("/", (req, res) => {
+  res.redirect("/wiki");
+});
 
 app.get("/", (req, res) => {
   res.send(layout(`<p>Hello</p>`));
